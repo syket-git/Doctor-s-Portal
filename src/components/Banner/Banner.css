@@ -1,0 +1,23 @@
+.background{
+    background-image: url('../../images/background.png');
+    min-height: 600px;
+    width: 100%;
+    background-position: left;
+    
+}
+.h2{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.margin-top{
+    margin-top: 120px;
+}
+.button{
+    background-color: #24c39e;
+    color: white;
+    font-weight: bold;
+    padding: 9px 18px;
+    font-size: 15px;
+    margin-top:30px;
+}

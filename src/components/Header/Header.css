@@ -1,0 +1,11 @@
+.shadow{
+    box-shadow: 0 0.1rem 1rem rgba(0,0,0,0.1)!important;;
+}
+.link{
+    margin-right: 30px;
+    font-weight: 600;
+    color:black !important;
+}
+.another-color{
+    color:white !important;
+}
