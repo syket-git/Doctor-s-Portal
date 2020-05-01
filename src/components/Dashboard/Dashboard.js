@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import './Dashboard.css';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -10,9 +9,17 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import moment from 'moment';
+
 
 const columns = [
-    { id: "name", label: "Name", minWidth: 120 },
+    { id: "name", label: "Name", minWidth: 100 },
+    {
+        id: "id",
+        label: "Appointment Id",
+        minWidth: 80,
+        format: value =>value.toLocaleString("en-US")
+    }, 
     { id: "category", label: "Category", minWidth: 100 },
     {
         id: "time",
@@ -20,15 +27,27 @@ const columns = [
         minWidth: 80,
         format: value => value.toLocaleString("en-US")
     },
+    
     {
         id: "date",
         label: "Date",
         minWidth: 80,
         format: value => moment(value).format('L')
+    },
+    {
+        id: "number",
+        label: "Mobile Number",
+        minWidth: 80,
+        format: value => value.toLocaleString("en-US")
+    }, 
+    
+    {
+        id: "status",
+        label: "Status",
+        minWidth: 80,
+        format: value => <button className="btn btn-success">Pending</button>
     }
 ];
-
-
 
 const useStyles = makeStyles({
     root: {
@@ -39,39 +58,27 @@ const useStyles = makeStyles({
     }
 });
 
-const AppointmentList = () => {
 
-    const [appointmentList, setAppointmentList] = useState([]);
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const onChange = date => {
-        setCurrentDate(date);
+
+
+const Dashboard = () => {
+    const [allData, setAllData] = useState([]);
+
+    fetch("http://localhost:4800/all-appointments")
+    .then(res => res.json())
+    .then(data => {
+        setAllData(data);
+
+    })
+
+
+    function createData(name, id, category, time, date, number, status) {
+        return { name, id, category, time, date, number, status };
     }
+    const button = <button className="btn btn-success">Pending</button>
 
-    const date = (moment(currentDate).format('L'))
-    const finalDate = Date.parse(date);
-
-
-    useEffect(() => {
-        fetch("http://localhost:4800/appointment-list", {
-            method: "POST",
-            body: JSON.stringify({ finalDate }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setAppointmentList(data)
-                console.log(data);
-            })
-    }, [finalDate])
-
-    function createData(name, category, time, date) {
-        return { name, category, time, date };
-    }
-
-
-    const rows = appointmentList.map(al => createData(al.name, al.category, al.time, al.finalDate));
+    const rows = allData && allData.map(dt => createData(dt.name, dt._id, dt.category, dt.time, dt.finalDate, dt.number, button));
+    
 
     console.log(rows);
 
@@ -90,21 +97,30 @@ const AppointmentList = () => {
 
 
 
+
+
     return (
         <div>
             <div className="container">
-                <h2 className="h2 text-center mt-5 mb-5">Please select date to see the <br /> appointment list</h2>
-                <div className="row">
-                    <div className="col-md-5">
-                        <div>
-                            <Calendar
-                                onChange={onChange}
-                                value={currentDate}
-                            />
+                <div className="row mt-5">
+                    <div className="col-md-4">
+                        <div class="dash-card one">
+                            <h3>{allData.length} Total Appointment</h3>
                         </div>
                     </div>
-                    <div className="col-md-7">
-                        <Paper className={classes.root}>
+                    <div className="col-md-4">
+                        <div class="dash-card two">
+                            <h3>0 Finished Appointment</h3>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div class="dash-card three">
+                            <h3>{allData.length} Pending Appointment</h3>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-5">
+                <Paper className={classes.root}>
                             <TableContainer className={classes.container}>
                                 <Table stickyHeader aria-label="sticky table">
                                     <TableHead>
@@ -152,11 +168,10 @@ const AppointmentList = () => {
                                 onChangeRowsPerPage={handleChangeRowsPerPage}
                             />
                         </Paper>
-                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default AppointmentList;
+export default Dashboard;

@@ -10,6 +10,7 @@ import {
 import GetAppointment from './components/GetAppointment/GetAppointment';
 import NotFound from './components/NotFound/NotFound';
 import AppointmentList from './components/AppointmentList/AppointmentList';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
           <Route exact path="/doctor/appointment/list">
             <Header></Header>
             <AppointmentList></AppointmentList>
+          </Route>
+          <Route exact path="/doctor/dashboard">
+            <Header></Header>
+            <Dashboard></Dashboard>
           </Route>
           <Route path="*">
             <Header></Header>

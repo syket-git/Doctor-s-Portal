@@ -1,0 +1,19 @@
+.dash-card{
+    
+    color:black;
+    padding: 20px;
+    border-radius: 20px;
+    
+}
+.one{
+    background: cyan;
+}
+.two{
+    background-color: #66f0d0;
+}
+.three{
+    background-color:#0deeba;
+}
+h3{
+    font-size: 1.5rem !important;
+}
