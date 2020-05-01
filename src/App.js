@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import GetAppointment from './components/GetAppointment/GetAppointment';
 import NotFound from './components/NotFound/NotFound';
+import AppointmentList from './components/AppointmentList/AppointmentList';
 
 function App() {
   return (
@@ -20,9 +21,13 @@ function App() {
             <Header></Header>
             <Banner></Banner>
           </Route>
-          <Route path="/get-appointment">
+          <Route exact path="/doctor/appointment">
             <Header></Header>
             <GetAppointment></GetAppointment>
+          </Route>
+          <Route exact path="/doctor/appointment/list">
+            <Header></Header>
+            <AppointmentList></AppointmentList>
           </Route>
           <Route path="*">
             <Header></Header>
