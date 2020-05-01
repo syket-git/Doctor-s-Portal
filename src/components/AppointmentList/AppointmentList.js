@@ -52,7 +52,7 @@ const AppointmentList = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:4800/appointment-list", {
+        fetch("https://boiling-sierra-25674.herokuapp.com/appointment-list", {
             method: "POST",
             body: JSON.stringify({ finalDate }),
             headers: {

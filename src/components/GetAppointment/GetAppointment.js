@@ -94,7 +94,7 @@ const GetAppointment = () => {
     const info = ({ category, time, name, number, email, finalDate })
     console.log(info);
 
-    fetch("http://localhost:4800/appointments", {
+    fetch("https://boiling-sierra-25674.herokuapp.com/appointments", {
       method: "POST",
       body: JSON.stringify(info),
       headers: {

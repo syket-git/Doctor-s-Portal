@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 const Dashboard = () => {
     const [allData, setAllData] = useState([]);
 
-    fetch("http://localhost:4800/all-appointments")
+    fetch("https://boiling-sierra-25674.herokuapp.com/all-appointments")
     .then(res => res.json())
     .then(data => {
         setAllData(data);
